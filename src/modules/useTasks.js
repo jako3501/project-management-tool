@@ -53,6 +53,11 @@ export const useTasks = () => {
     await deleteDoc(doc(db, tasksFirebaseCollectionRef, id))
   }
 
+  // filter tasks by status
+  const filteredTasks = (status) => {
+    return tasks.value.filter(task => task.status === status);
+  };
+
   return {
     newTaskTitle,
     newTaskDescription,
@@ -61,7 +66,7 @@ export const useTasks = () => {
     tasks,
     addTask,
     deleteTask,
-
+    filteredTasks
   }
 
 }
