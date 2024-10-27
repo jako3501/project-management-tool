@@ -8,7 +8,7 @@ import { RouterLink, RouterView } from 'vue-router'
     <div class="wrapper">
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/login">Login</RouterLink>
       </nav>
     </div>
   </header>
@@ -20,6 +20,7 @@ import { RouterLink, RouterView } from 'vue-router'
 header {
   display: flex;
   place-items: center;
+  justify_content: center;
   padding-right: calc(var(--section-gap) / 2);
 }
 
