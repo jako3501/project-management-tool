@@ -5,74 +5,8 @@ import KanbanBoard from '../components/KanbanBoard.vue';
 
 <template>
   <main>
-
-
         <AddTask />
         <KanbanBoard />
-
-
-
-
-    <!-- <div class="add-todo">
-
-      <input type="text" v-model="newTaskTitle" placeholder="Add a new task" />
-      <input type="text" v-model="newTaskDescription" placeholder="Add a new task description" />
-      <input type="text" v-model="newTaskEstimatedTime" placeholder="Add time estimate" />
-
-      <select v-model="newTaskStatus" required name="status" id="status">
-        <option value="" selected disabled hidden>Status</option>
-        <option value="todo">Todo</option>
-        <option value="inProgress">In Progress</option>
-        <option value="completed">Completed</option>
-      </select>
-
-      <button @click="addTask">Add Task</button>
-    </div>
-
-
-    <div class="kanban-container">
-    <div class="todo-container">
-      <h3>Todo</h3>
-      <div v-for="task in filteredTasks('todo')" :key="task.id" class="task-item">
-        <p>id: {{ task.id }}</p>
-        <p>title: {{ task.title }}</p>
-        <p>description: {{ task.description }}</p>
-        <p>estimatedTime: {{ task.estimatedTime }}</p>
-        <p>status: {{ task.status }}</p>
-        <button @click="changeTaskStatus(task.id, 'inProgress')">Start Task</button>
-        <button @click="deleteTask(task.id)">Delete me</button>
-      </div>
-    </div>
-
-    <div class="in-progress-container">
-      <h3>In Progress</h3>
-      <div v-for="task in filteredTasks('inProgress')" :key="task.id" class="task-item">
-        <p>id: {{ task.id }}</p>
-        <p>title: {{ task.title }}</p>
-        <p>description: {{ task.description }}</p>
-        <p>estimatedTime: {{ task.estimatedTime }}</p>
-        <p>status: {{ task.status }}</p>
-        <button @click="changeTaskStatus(task.id, 'completed')">Complete task</button>
-        <button @click="deleteTask(task.id)">Delete me</button>
-      </div>
-    </div>
-
-    <div class="completed-container">
-      <h3>Completed</h3>
-      <div v-for="task in filteredTasks('completed')" :key="task.id" class="task-item">
-        <p>id: {{ task.id }}</p>
-        <p>title: {{ task.title }}</p>
-        <p>description: {{ task.description }}</p>
-        <p>estimatedTime: {{ task.estimatedTime }}</p>
-        <p>status: {{ task.status }}</p>
-        <button @click="changeTaskStatus(task.id, 'inProgress')">Undo completed</button>
-        <button @click="deleteTask(task.id)">Delete me</button>
-      </div>
-    </div>
-  </div> -->
-
-
-
   </main>
 </template>
 
@@ -149,4 +83,5 @@ main {
   border: none;
   outline: none;
 }
+
 </style>
