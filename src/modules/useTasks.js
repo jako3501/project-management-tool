@@ -1,24 +1,27 @@
 import { ref, onMounted } from 'vue';
 import { tasksCollection, tasksFirebaseCollectionRef, db } from './firebase';
-import { onSnapshot, addDoc, doc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { onSnapshot, addDoc, doc, deleteDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 
 export const useTasks = () => {
 
-  // Create a new movie title and store it in a ref
+  // Create a new task and store it in a ref
   const newTaskTitle = ref('');
   const newTaskDescription = ref('');
   const newTaskEstimatedTime = ref('');
   const newTaskStatus = ref('');
+  const newTaskStartedAt = ref('');
+  const newTaskCompletedAt = ref('');
 
-  // Create a list of movies and store it in a ref
+  // List of tasks and store it in a ref
   const tasks = ref([]);
 
-  // Create a function to retrieve a new movie to the list
+  // Function to retrieve a new movie to the list
   onMounted(() => {
     onSnapshot(tasksCollection, (snapshot) => {
       tasks.value = snapshot.docs.map(doc => ({
         id: doc.id,
-        ...doc.data() // spread operator
+        ...doc.data() // ... = spread operator
+        // Alternative way to write the above line
         /* title: doc.data().title,
         director: doc.data().director */
       }))
@@ -26,21 +29,25 @@ export const useTasks = () => {
   })
 
   const addTask = async () => {
+    // check if the input is empty, if input is empty, return (stop function)
     if (newTaskTitle.value.trim() === '' || 
         newTaskDescription.value.trim() === '' || 
         newTaskEstimatedTime.value.trim() === '' || 
         newTaskStatus.value.trim() === '') 
         return;
-    // check if the input is empty, if input is empty, return (stop function)
 
+    // Adding task to firebase
     await addDoc(tasksCollection, {
       title: newTaskTitle.value,
       description: newTaskDescription.value,
       estimatedTime: newTaskEstimatedTime.value,
       status: newTaskStatus.value,
+      startedAt: newTaskStartedAt.value,
+      completedAt: newTaskCompletedAt.value
 
     })
 
+    // Clear the input fields
     newTaskTitle.value = '';
     newTaskDescription.value = '';
     newTaskEstimatedTime.value = '';
@@ -61,8 +68,52 @@ export const useTasks = () => {
   // Change tast status
   const changeTaskStatus = async (id, newStatus) => {
     const taskDoc = doc(tasksCollection, id);
-    await updateDoc(taskDoc, { status: newStatus });
+    
+  
+    // Time meassurements for task
+    const updateData = {status: newStatus}
+    // Fetching date when task is moved from todo -> in progress
+    if (newStatus === 'inProgress') {
+      updateData.startedAt = serverTimestamp();
+    }
+
+    // Fetching date when task is moved from in progress -> completed
+    if (newStatus === 'completed') {
+      updateData.completedAt = serverTimestamp();
+    }
+
+    // Clearing startedAt and completedAt when task is reset to todo
+    if (newStatus === 'todo') {
+      updateData.startedAt = '';
+      updateData.completedAt = '';
+    }
+
+    await updateDoc(taskDoc, updateData);
   }
+
+  // Calculate time spent on a task from the time set to "In Progress" to the time set to "Completed"
+  const calculateTimeSpent = (startedAt, completedAt) => {
+    if (startedAt && completedAt) {
+      // Convert timestamps to date (in milliseconds)
+      const start = startedAt.toDate();
+      const end = completedAt.toDate();
+
+      // Calculate the difference in milliseconds
+      const differenceInMs = end - start;
+
+      // Convert milliseconds to minutes
+      const totalMinutes = Math.floor(differenceInMs / 1000 / 60);
+
+      // Calculate hours and remaining minutes
+      const hours = Math.floor(totalMinutes / 60);
+      const minutes = totalMinutes % 60;
+
+      // return the result
+      return `${hours}h ${minutes}m`;
+    }
+  }
+
+
 
   return {
     newTaskTitle,
@@ -73,7 +124,8 @@ export const useTasks = () => {
     addTask,
     deleteTask,
     filteredTasks,
-    changeTaskStatus
+    changeTaskStatus,
+    calculateTimeSpent
   }
 
 }

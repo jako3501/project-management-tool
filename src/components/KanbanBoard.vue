@@ -1,3 +1,14 @@
+<script setup>
+import { useTasks } from '../modules/useTasks';
+
+const {
+    filteredTasks,
+    deleteTask,
+    changeTaskStatus,
+    calculateTimeSpent
+} = useTasks();
+</script>
+
 <template>
     <div class="kanban-container">
         <div class="todo-container">
@@ -9,7 +20,7 @@
                 <p>estimatedTime: {{ task.estimatedTime }}</p>
                 <p>status: {{ task.status }}</p>
                 <button @click="deleteTask(task.id)">Delete me</button>
-                <button @click="changeTaskStatus(task.id, 'inProgress')">Start Progress</button>
+                <button @click="changeTaskStatus(task.id, 'inProgress')">Start Task</button>
             </div>
         </div>
 
@@ -21,6 +32,7 @@
                 <p>description: {{ task.description }}</p>
                 <p>estimatedTime: {{ task.estimatedTime }}</p>
                 <p>status: {{ task.status }}</p>
+                <p v-if="task.startedAt">Started at: {{ task.startedAt.toDate().toLocaleString() }}</p>
                 <button @click="deleteTask(task.id)">Delete me</button>
                 <button @click="changeTaskStatus(task.id, 'completed')">Complete Task</button>
             </div>
@@ -34,6 +46,9 @@
                 <p>description: {{ task.description }}</p>
                 <p>estimatedTime: {{ task.estimatedTime }}</p>
                 <p>status: {{ task.status }}</p>
+                <p v-if="task.startedAt && task.completedAt">
+                    Time Spent: {{ calculateTimeSpent(task.startedAt, task.completedAt) }}
+                </p>
                 <button @click="deleteTask(task.id)">Delete me</button>
                 <button @click="changeTaskStatus(task.id, 'inProgress')">Undo Completed</button>
                 <button @click="changeTaskStatus(task.id, 'todo')">Reset Todo</button>
@@ -42,15 +57,7 @@
     </div>
 </template>
 
-<script setup>
-import { useTasks } from '../modules/useTasks';
 
-const {
-    filteredTasks,
-    deleteTask,
-    changeTaskStatus
-} = useTasks();
-</script>
 
 <style scoped>
 .kanban-container {
