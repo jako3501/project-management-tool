@@ -1,23 +1,19 @@
 <script setup>
-import { ref } from 'vue'
-import { useTasks } from '../modules/useTasks'
-
-
-const { tasks,
-  addTask,
-  deleteTask,
-  filteredTasks,
-  changeTaskStatus,
-  newTaskTitle,
-  newTaskDescription,
-  newTaskEstimatedTime,
-  newTaskStatus, } = useTasks()
+import AddTask from '../components/AddTodo.vue';
+import KanbanBoard from '../components/KanbanBoard.vue';
 </script>
 
 <template>
   <main>
 
-    <div class="add-todo">
+
+        <AddTask />
+        <KanbanBoard />
+
+
+
+
+    <!-- <div class="add-todo">
 
       <input type="text" v-model="newTaskTitle" placeholder="Add a new task" />
       <input type="text" v-model="newTaskDescription" placeholder="Add a new task description" />
@@ -73,8 +69,8 @@ const { tasks,
         <button @click="deleteTask(task.id)">Delete me</button>
       </div>
     </div>
-  </div>
-    
+  </div> -->
+
 
 
   </main>
@@ -91,12 +87,16 @@ main {
 .kanban-container {
   display: flex;
 }
-.todo-container, .in-progress-container, .completed-container {
+
+.todo-container,
+.in-progress-container,
+.completed-container {
   margin: 10px;
   padding: 10px;
   border: 1px solid #ccc;
   width: 30%;
 }
+
 .task-item {
   margin: 10px 0;
   padding: 10px;

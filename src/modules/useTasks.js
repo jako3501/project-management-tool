@@ -4,16 +4,16 @@ import { onSnapshot, addDoc, doc, deleteDoc, updateDoc } from 'firebase/firestor
 
 export const useTasks = () => {
 
-  // Step 1: Create a new movie title and store it in a ref
+  // Create a new movie title and store it in a ref
   const newTaskTitle = ref('');
   const newTaskDescription = ref('');
   const newTaskEstimatedTime = ref('');
   const newTaskStatus = ref('');
 
-  // Step 2: Create a list of movies and store it in a ref
+  // Create a list of movies and store it in a ref
   const tasks = ref([]);
 
-  // Step 3: Create a function to retrieve a new movie to the list
+  // Create a function to retrieve a new movie to the list
   onMounted(() => {
     onSnapshot(tasksCollection, (snapshot) => {
       tasks.value = snapshot.docs.map(doc => ({
@@ -47,7 +47,7 @@ export const useTasks = () => {
     newTaskStatus.value = '';
   }
 
-  // step 5: Create a function to delete a movie from the list
+  // Create a function to delete a movie from the list
   const deleteTask = async (id) => {
     console.log("deleting task with id: ", id)
     await deleteDoc(doc(db, tasksFirebaseCollectionRef, id))
