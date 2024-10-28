@@ -7,6 +7,7 @@ const { tasks,
   addTask,
   deleteTask,
   filteredTasks,
+  changeTaskStatus,
   newTaskTitle,
   newTaskDescription,
   newTaskEstimatedTime,
@@ -42,6 +43,7 @@ const { tasks,
         <p>description: {{ task.description }}</p>
         <p>estimatedTime: {{ task.estimatedTime }}</p>
         <p>status: {{ task.status }}</p>
+        <button @click="changeTaskStatus(task.id, 'inProgress')">Start Task</button>
         <button @click="deleteTask(task.id)">Delete me</button>
       </div>
     </div>
@@ -54,6 +56,7 @@ const { tasks,
         <p>description: {{ task.description }}</p>
         <p>estimatedTime: {{ task.estimatedTime }}</p>
         <p>status: {{ task.status }}</p>
+        <button @click="changeTaskStatus(task.id, 'completed')">Complete task</button>
         <button @click="deleteTask(task.id)">Delete me</button>
       </div>
     </div>
@@ -66,6 +69,7 @@ const { tasks,
         <p>description: {{ task.description }}</p>
         <p>estimatedTime: {{ task.estimatedTime }}</p>
         <p>status: {{ task.status }}</p>
+        <button @click="changeTaskStatus(task.id, 'inProgress')">Undo completed</button>
         <button @click="deleteTask(task.id)">Delete me</button>
       </div>
     </div>

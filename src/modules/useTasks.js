@@ -1,6 +1,6 @@
 import { ref, onMounted } from 'vue';
 import { tasksCollection, tasksFirebaseCollectionRef, db } from './firebase';
-import { onSnapshot, addDoc, doc, deleteDoc } from 'firebase/firestore';
+import { onSnapshot, addDoc, doc, deleteDoc, updateDoc } from 'firebase/firestore';
 
 export const useTasks = () => {
 
@@ -58,6 +58,12 @@ export const useTasks = () => {
     return tasks.value.filter(task => task.status === status);
   };
 
+  // Change tast status
+  const changeTaskStatus = async (id, newStatus) => {
+    const taskDoc = doc(tasksCollection, id);
+    await updateDoc(taskDoc, { status: newStatus });
+  }
+
   return {
     newTaskTitle,
     newTaskDescription,
@@ -66,7 +72,8 @@ export const useTasks = () => {
     tasks,
     addTask,
     deleteTask,
-    filteredTasks
+    filteredTasks,
+    changeTaskStatus
   }
 
 }
