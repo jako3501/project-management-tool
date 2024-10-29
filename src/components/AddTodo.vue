@@ -1,3 +1,15 @@
+<script setup>
+import { useTasks } from '../modules/useTasks';
+
+const { 
+    newTaskTitle, 
+    newTaskDescription, 
+    newTaskEstimatedTime, 
+    newTaskStatus, 
+    addTask 
+    } = useTasks();
+</script>
+
 <template>
     <div class="add-todo">
         <input type="text" v-model="newTaskTitle" placeholder="Add a new task" />
@@ -14,18 +26,6 @@
         <button @click="addTask">Add Task</button>
     </div>
 </template>
-
-<script setup>
-import { useTasks } from '../modules/useTasks';
-
-const { 
-    newTaskTitle, 
-    newTaskDescription, 
-    newTaskEstimatedTime, 
-    newTaskStatus, 
-    addTask 
-    } = useTasks();
-</script>
 
 <style scoped>
     .add-todo {

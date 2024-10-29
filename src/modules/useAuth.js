@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
 import { useRouter } from 'vue-router';
 
 
@@ -61,5 +61,11 @@ export const useAuth = () => {
             });
     }
 
-    return { email, password, errMsg, login, logout, isLoggedIn }
+    
+
+
+
+
+
+    return { email, password, errMsg, isLoggedIn, login, logout }
 }

@@ -60,7 +60,6 @@ const {
 
 
 <style scoped>
-.kanban-container {
     .kanban-container {
         display: flex;
     }
@@ -80,5 +79,5 @@ const {
         border: 1px solid #ddd;
         border-radius: 4px;
     }
-}
+
 </style>
