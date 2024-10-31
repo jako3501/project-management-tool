@@ -1,22 +1,18 @@
 <script setup>
 import { useAuth } from '../modules/useAuth'
 
-const { email, password, errMsg, login, logout, isLoggedIn } = useAuth()
+const { email, password, errMsg, login } = useAuth()
 </script>
 
 <template>
   <h1>Login</h1>
-  <div v-if="!isLoggedIn"> <!-- Show form only if not logged in -->
+  <div> <!-- Show form only if not logged in -->
     <form id="login-form" @submit="login">
       <input type="text" placeholder="E-mail" v-model="email">
       <input type="password" placeholder="Password" v-model="password">
       <p v-if="errMsg">{{ errMsg }}</p>
       <button type="submit">Submit</button>
     </form>
-  </div>
-  <div v-else> <!-- Show if logged in-->
-    <p>You are now logged in.</p>
-    <button @click="logout">Logout</button> 
   </div>
 
 </template>

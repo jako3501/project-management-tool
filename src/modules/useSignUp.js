@@ -27,7 +27,8 @@ export const useSignUp = () => {
             await setDoc(doc(db, 'users', cred.user.uid), {
                 firstName: firstName.value,
                 lastName: lastName.value,
-                role: role.value
+                email: email.value,
+                role: 'employee'
             })
             console.log('User created:', cred.user.uid)
             router.push({  name: 'login' });

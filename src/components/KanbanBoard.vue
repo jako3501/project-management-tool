@@ -61,16 +61,30 @@ const {
 
 <style scoped>
     .kanban-container {
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 1rem;
     }
 
-    .todo-container,
-    .in-progress-container,
+    .todo-container {
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        width: 100%;
+    }
+
+    .in-progress-container {
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        width: 100%;
+    }
+
     .completed-container {
         margin: 10px;
         padding: 10px;
         border: 1px solid #ccc;
-        width: 30%;
+        width: 100%;
     }
 
     .task-item {

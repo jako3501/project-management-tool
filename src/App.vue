@@ -1,5 +1,8 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import { useAuth} from './modules/useAuth'
+
+const { isLoggedIn, userRole } = useAuth()
 </script>
 
 <template>
@@ -7,10 +10,12 @@ import { RouterLink, RouterView } from 'vue-router'
 
     <div class="wrapper">
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/login">Login</RouterLink>
-        <RouterLink to="/admin">Admin</RouterLink>
-        <RouterLink to="/register">Register</RouterLink>
+        <RouterLink to="/" v-if="isLoggedIn">Home</RouterLink>
+        <RouterLink to="/login" v-if="!isLoggedIn">Sign in</RouterLink>
+        <RouterLink to="/logout" v-if="isLoggedIn">Sign out</RouterLink>
+        <RouterLink to="/register" v-if="!isLoggedIn">Register</RouterLink>
+        <RouterLink to="/admin" v-if="userRole === 'admin'">Admin</RouterLink>
+        
       </nav>
     </div>
   </header>
@@ -22,7 +27,7 @@ import { RouterLink, RouterView } from 'vue-router'
 header {
   display: flex;
   place-items: center;
-  justify_content: center;
+  justify-content: center;
   padding-right: calc(var(--section-gap) / 2);
 }
 
