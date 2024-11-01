@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [

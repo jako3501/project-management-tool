@@ -1,6 +1,9 @@
 import { ref, onMounted } from 'vue';
 import { tasksCollection, tasksFirebaseCollectionRef, db } from './firebase';
 import { onSnapshot, addDoc, doc, deleteDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
+import { useAuth } from './useAuth';
+
+const { userRole } = useAuth();
 
 export const useTasks = () => {
 
@@ -15,7 +18,7 @@ export const useTasks = () => {
   // List of tasks and store it in a ref
   const tasks = ref([]);
 
-  // Function to retrieve a new movie to the list
+  // Function to retrieve a task to the list
   onMounted(() => {
     onSnapshot(tasksCollection, (snapshot) => {
       tasks.value = snapshot.docs.map(doc => ({
@@ -56,6 +59,10 @@ export const useTasks = () => {
 
   // Create a function to delete a movie from the list
   const deleteTask = async (id) => {
+    if (userRole.value !== 'admin' && userRole.value !== 'manager') {
+      console.warn("Your don't have permission to delete this task.")
+      return;
+    }
     console.log("deleting task with id: ", id)
     await deleteDoc(doc(db, tasksFirebaseCollectionRef, id))
   }

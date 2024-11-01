@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { getFirestore, doc, getDoc} from 'firebase/firestore'
 
 
+
 export const useAuth = () => {
 
     
@@ -12,6 +13,7 @@ export const useAuth = () => {
     const errMsg = ref('')
     const isLoggedIn = ref(false)
     const userRole = ref(null)
+    const isLoading = ref(true) // to fix userRole not being set on first load
     const router = useRouter()
     const auth = getAuth()
     const db = getFirestore()
@@ -19,18 +21,24 @@ export const useAuth = () => {
     // Check if user is logged in
     onAuthStateChanged(auth, async (user) => {
         isLoggedIn.value = !!user
+        console.log('User state changed:', user)
         if (user) {
             await fetchUserRoles(user.uid)
+            isLoading.value = false
         }
         else {
             userRole.value = null
+            isLoading.value = false
         }
+        
     })
 
     const fetchUserRoles = async (uid) => {
         const userDoc = await getDoc(doc(db, 'users', uid))
+        console.log('Fetching user roles for UID:', uid)
         if (userDoc.exists()) {
             userRole.value = userDoc.data().role
+            console.log('User role fetched:', userRole.value)
         }
         else {
             console.log('User not found')
@@ -46,6 +54,7 @@ export const useAuth = () => {
             .then((data) => {
                 console.log(data)
                 console.log(auth.currentUser)
+                fetchUserRoles(data.user.uid)
                 router.push({ name: 'home' }) 
             })
 
@@ -86,5 +95,5 @@ export const useAuth = () => {
 
 
 
-    return { email, password, errMsg, isLoggedIn, userRole, login, logout }
+    return { email, password, errMsg, isLoggedIn, userRole, isLoading, login, logout, fetchUserRoles }
 }

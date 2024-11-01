@@ -1,18 +1,33 @@
 <script setup>
-import { useTasks } from '../modules/useTasks';
+import { useTasks } from '../modules/useTasks'
+import { useAuth } from '../modules/useAuth'
+import { watch } from 'vue';
+
+
 
 const {
     filteredTasks,
     deleteTask,
     changeTaskStatus,
     calculateTimeSpent
-} = useTasks();
+} = useTasks()
+
+const { userRole, isLoading } = useAuth()
+
+watch(userRole, (newValue) => {
+    console.log('User Role changed:', newValue);
+    console.log('Current User Role:', userRole.value);
+});
+
+
+
 </script>
 
 <template>
     <div class="kanban-container">
-        <div class="todo-container">
+        <div class="todo-container" v-if="!isLoading">
             <h3>Todo</h3>
+            <p>User Role: {{ userRole.value }}</p>
             <div v-for="task in filteredTasks('todo')" :key="task.id" class="task-item">
                 <p>id: {{ task.id }}</p>
                 <p>title: {{ task.title }}</p>
@@ -20,11 +35,18 @@ const {
                 <p>estimatedTime: {{ task.estimatedTime }}</p>
                 <p>status: {{ task.status }}</p>
                 <button @click="deleteTask(task.id)">Delete me</button>
+
+                
+                <!--  USER ROLES NOT FUNCTIONING PROPERLY  -->
+
+                <!-- <button v-if="userRole.value === 'admin' || userRole.value === 'manager'" 
+                @click="deleteTask(task.id)">Delete me</button> -->
                 <button @click="changeTaskStatus(task.id, 'inProgress')">Start Task</button>
             </div>
+            
         </div>
 
-        <div class="in-progress-container">
+        <div class="in-progress-container" v-if="!isLoading">
             <h3>In Progress</h3>
             <div v-for="task in filteredTasks('inProgress')" :key="task.id" class="task-item">
                 <p>id: {{ task.id }}</p>
@@ -34,11 +56,17 @@ const {
                 <p>status: {{ task.status }}</p>
                 <p v-if="task.startedAt">Started at: {{ task.startedAt.toDate().toLocaleString() }}</p>
                 <button @click="deleteTask(task.id)">Delete me</button>
+
+
+                <!--  USER ROLES NOT FUNCTIONING PROPERLY  -->
+
+                <!-- <button v-if="userRole.value === 'admin' || userRole.value === 'manager'" 
+                @click="deleteTask(task.id)">Delete me</button> -->
                 <button @click="changeTaskStatus(task.id, 'completed')">Complete Task</button>
             </div>
         </div>
 
-        <div class="completed-container">
+        <div class="completed-container" v-if="!isLoading">
             <h3>Completed</h3>
             <div v-for="task in filteredTasks('completed')" :key="task.id" class="task-item">
                 <p>id: {{ task.id }}</p>
@@ -52,6 +80,16 @@ const {
                 <button @click="deleteTask(task.id)">Delete me</button>
                 <button @click="changeTaskStatus(task.id, 'inProgress')">Undo Completed</button>
                 <button @click="changeTaskStatus(task.id, 'todo')">Reset Todo</button>
+
+
+                <!--  USER ROLES NOT FUNCTIONING PROPERLY  -->
+
+                <!-- <button v-if="userRole.value === 'admin' || userRole.value === 'manager'" 
+                @click="deleteTask(task.id)">Delete me</button>
+                <button v-if="userRole.value === 'admin' || userRole.value === 'manager'" 
+                @click="changeTaskStatus(task.id, 'inProgress')">Undo Completed</button>
+                <button v-if="userRole.value === 'admin' || userRole.value === 'manager'" 
+                @click="changeTaskStatus(task.id, 'todo')">Reset Todo</button> -->
             </div>
         </div>
     </div>
