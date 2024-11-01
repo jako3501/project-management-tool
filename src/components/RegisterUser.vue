@@ -68,12 +68,16 @@ main {
     color: #a3a3a3;
 }
 
-#register-form button {
-    height: 30px;
-    margin: 10px;
-    padding: 0 10px;
-    border-radius: 20px;
-    border: none;
-    outline: none;
+form button {
+  margin: 5px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  background-color: var(--color-border);
+  color: white;
+  border: none;
+}
+
+form button:hover {
+  scale: 1.1;
 }
 </style>

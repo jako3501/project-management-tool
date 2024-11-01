@@ -61,7 +61,7 @@ onMounted(fetchUsers)
 <template>
     <section>
         <h1>Hello Admin!</h1>
-        <p>Here you can grant your employees access to edit and delete tasks.</p>
+        <p>Here you can manage the accounts, change user roles and delete users.</p>
 
         <div class="user-container">
             <table>

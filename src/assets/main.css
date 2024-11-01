@@ -6,7 +6,7 @@
   padding: 2rem;
   font-weight: normal;
   display: flex;
-  place-items: center;
+  
   flex-direction: column;
   
 }
@@ -28,7 +28,7 @@ a,
 @media (min-width: 1024px) {
   body {
     display: flex;
-    place-items: center;
+    
   }
 
   #app {

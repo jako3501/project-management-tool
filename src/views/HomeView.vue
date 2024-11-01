@@ -28,4 +28,18 @@ main {
   flex-direction: column;
   align-items: center;
 }
+
+button {
+    padding: 5px 15px;
+    border: none;
+    margin: 0 5px;
+    border-radius: 5px;
+    background-color: #50505096;
+    color: rgb(214, 214, 214);
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #505050;
+}
 </style>

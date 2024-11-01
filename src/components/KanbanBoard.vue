@@ -27,33 +27,28 @@ watch(userRole, (newValue) => {
     <div class="kanban-container">
         <div class="todo-container" v-if="!isLoading">
             <h3>Todo</h3>
-            <p>User Role: {{ userRole.value }}</p>
             <div v-for="task in filteredTasks('todo')" :key="task.id" class="task-item">
-                <p>id: {{ task.id }}</p>
-                <p>title: {{ task.title }}</p>
-                <p>description: {{ task.description }}</p>
-                <p>estimatedTime: {{ task.estimatedTime }}</p>
-                <p>status: {{ task.status }}</p>
+                <h4>{{ task.title }}</h4>
+                <p>{{ task.description }}</p>
+                <p class="estimate">Estimated time: {{ task.estimatedTime }}</p>
                 <button @click="deleteTask(task.id)">Delete me</button>
 
-                
+
                 <!--  USER ROLES NOT FUNCTIONING PROPERLY  -->
 
                 <!-- <button v-if="userRole.value === 'admin' || userRole.value === 'manager'" 
                 @click="deleteTask(task.id)">Delete me</button> -->
                 <button @click="changeTaskStatus(task.id, 'inProgress')">Start Task</button>
             </div>
-            
+
         </div>
 
         <div class="in-progress-container" v-if="!isLoading">
             <h3>In Progress</h3>
             <div v-for="task in filteredTasks('inProgress')" :key="task.id" class="task-item">
-                <p>id: {{ task.id }}</p>
-                <p>title: {{ task.title }}</p>
-                <p>description: {{ task.description }}</p>
-                <p>estimatedTime: {{ task.estimatedTime }}</p>
-                <p>status: {{ task.status }}</p>
+                <h4>{{ task.title }}</h4>
+                <p>{{ task.description }}</p>
+                <p class="estimate">Estimated time: {{ task.estimatedTime }}</p>
                 <p v-if="task.startedAt">Started at: {{ task.startedAt.toDate().toLocaleString() }}</p>
                 <button @click="deleteTask(task.id)">Delete me</button>
 
@@ -69,11 +64,9 @@ watch(userRole, (newValue) => {
         <div class="completed-container" v-if="!isLoading">
             <h3>Completed</h3>
             <div v-for="task in filteredTasks('completed')" :key="task.id" class="task-item">
-                <p>id: {{ task.id }}</p>
-                <p>title: {{ task.title }}</p>
-                <p>description: {{ task.description }}</p>
-                <p>estimatedTime: {{ task.estimatedTime }}</p>
-                <p>status: {{ task.status }}</p>
+                <h4>{{ task.title }}</h4>
+                <p>{{ task.description }}</p>
+                <p class="estimate">Estimated time: {{ task.estimatedTime }}</p>
                 <p v-if="task.startedAt && task.completedAt">
                     Time Spent: {{ calculateTimeSpent(task.startedAt, task.completedAt) }}
                 </p>
@@ -98,38 +91,66 @@ watch(userRole, (newValue) => {
 
 
 <style scoped>
-    .kanban-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 1rem;
-    }
+h3 {
+    color: hsla(160, 100%, 37%, 1);
+    text-align: center;
+    font-weight: 700;
+}
 
-    .todo-container {
-        margin: 10px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        width: 100%;
-    }
+h4 {
+    color: rgb(219, 219, 219);
+    font-size: 1.3rem;
+}
 
-    .in-progress-container {
-        margin: 10px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        width: 100%;
-    }
+.estimate {
+    margin-top: 20px;
+}
 
-    .completed-container {
-        margin: 10px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        width: 100%;
-    }
+.kanban-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+}
 
-    .task-item {
-        margin: 10px 0;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-    }
+.todo-container {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    width: 100%;
+}
 
+.in-progress-container {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+.completed-container {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+.task-item {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    padding: 5px 15px;
+    border: none;
+    margin: 0 5px 0 0;
+    border-radius: 5px;
+    background-color: #50505096;
+    color: rgb(214, 214, 214);
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #505050;
+}
 </style>

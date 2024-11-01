@@ -49,4 +49,8 @@ form button {
   color: white;
   border: none;
 }
+
+form button:hover {
+  scale: 1.1;
+}
 </style>

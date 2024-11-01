@@ -23,4 +23,23 @@ main {
 h1 {
     margin: 20px;
 }
+
+div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  background-color: var(--color-border);
+  color: white;
+  border: none;
+}
+
+button:hover {
+  scale: 1.1;
+}
 </style>
